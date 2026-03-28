@@ -15,33 +15,33 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @DeleteMapping("/{id}")
-    public void removeUser(@PathVariable Long id) {
-        log.info("DELETE request for user ID: {}", id);
-        userService.delete(id);
+    @GetMapping("/{id}")
+    public UserDto getUser(@PathVariable Long id) {
+        log.info("Fetching user ID: {}", id);
+        return userService.getById(id);
     }
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
-        log.info("GET request for all users");
+    public List<UserDto> getUsers() {
+        log.info("Fetching all users");
         return userService.findAll();
-    }
-
-    @PatchMapping("/{id}")
-    public UserDto patchUser(@PathVariable Long id, @RequestBody UserDto dto) {
-        log.info("PATCH request for user ID: {}", id);
-        return userService.update(id, dto);
-    }
-
-    @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable Long id) {
-        log.info("GET request for user ID: {}", id);
-        return userService.getById(id);
     }
 
     @PostMapping
     public UserDto saveUser(@Valid @RequestBody UserDto dto) {
-        log.info("POST request to create user: {}", dto.getEmail());
+        log.info("Creating user: {}", dto.getEmail());
         return userService.create(dto);
+    }
+
+    @PatchMapping("/{id}")
+    public UserDto editUser(@PathVariable Long id, @RequestBody UserDto dto) {
+        log.info("Updating user ID: {}", id);
+        return userService.update(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void removeUser(@PathVariable Long id) {
+        log.info("Deleting user ID: {}", id);
+        userService.delete(id);
     }
 }
