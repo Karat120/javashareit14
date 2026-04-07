@@ -3,11 +3,9 @@ package ru.practicum.shareit.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import jakarta.validation.ConstraintViolationException;
 
 import java.util.Map;
 
@@ -37,17 +35,12 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler({
-            ValidationException.class,
-            ConstraintViolationException.class,
-            MethodArgumentNotValidException.class
+            ValidationException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> catchValidationErrors(Exception ex) {
         log.error("400 Validation: {}", ex.getMessage());
         String info = ex.getMessage();
-        if (ex instanceof MethodArgumentNotValidException) {
-            info = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        }
         return Map.of("error", info != null ? info : "Ошибка валидации");
     }
 

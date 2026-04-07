@@ -1,6 +1,5 @@
 package ru.practicum.shareit.user;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto saveUser(@Valid @RequestBody UserDto dto) {
+    public UserDto saveUser(@RequestBody UserDto dto) {
         log.info("Creating user: {}", dto.getEmail());
         return userService.create(dto);
     }
