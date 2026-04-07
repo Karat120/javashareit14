@@ -1,25 +1,29 @@
 package ru.practicum.shareit.item;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
+import java.util.ArrayList;
 
+@UtilityClass
 public class ItemMapper {
-    public static Item toItem(ItemDto dto) {
-        return Item.builder()
-                .available(dto.getAvailable())
-                .description(dto.getDescription())
-                .name(dto.getName())
-                .id(dto.getId())
+    public static ItemDto toItemDto(Item entity) {
+        return ItemDto.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .available(entity.getAvailable())
+                .requestId(entity.getRequestId())
+                .comments(new ArrayList<>())
                 .build();
     }
 
-    public static ItemDto toItemDto(Item entity) {
-        return ItemDto.builder()
-                .requestId(entity.getRequestId())
-                .available(entity.getAvailable())
-                .description(entity.getDescription())
-                .name(entity.getName())
-                .id(entity.getId())
+    public static Item toItem(ItemDto dto) {
+        return Item.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .available(dto.getAvailable())
                 .build();
     }
 }
