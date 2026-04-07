@@ -35,6 +35,7 @@ class BookingDtoJsonTest {
 
     @Test
     void deserialize_shouldReadDateFields() throws Exception {
+        // CHECKSTYLE:OFF
         String content = """
                 {
                   "id": 5,
@@ -44,6 +45,7 @@ class BookingDtoJsonTest {
                   "end": "2026-04-11T09:30:00"
                 }
                 """;
+        // CHECKSTYLE:ON
 
         BookingDto parsed = json.parseObject(content);
 
